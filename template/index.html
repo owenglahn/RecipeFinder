@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Recipe Finder</h1>
+<select class="form-control form-control-lg" name='meal'>
+    <option value="Breakfast/Brunch">Breakfast/Brunch</option>
+    <option value="Lunch">Lunch</option>
+    <option value="Dinner">Dinner</option>
+</select>
+
+<p>
+<div class="btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" method="post" checked autocomplete="off" name="diet_button" value="Gluten-Free">
+        Gluten-Free
+    </label>
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" method="post" checked autocomplete="off" name="diet_button" value="Vegetarian">
+        Vegetarian
+    </label>
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" method="post" checked autocomplete="off" name="diet_button" value="Vegan"> Vegan
+    </label>
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" method="post" checked autocomplete="off" name="diet_button" value="Lactose-Free">
+        Lactose-Free
+    </label>
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" method="post" checked autocomplete="off" name="diet_button" value="Halal"> Halal
+    </label>
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" method="post" checked autocomplete="off" name="diet_button" value="Kosher"> Kosher
+    </label>
+    {% for other in others %}
+    <label class="btn btn-outline-secondary active">
+        <input type="checkbox" method='post' checked autocomplete="on" name="diet_button" value="{{ other }}">{{ other }}
+    </label>
+    {% endfor %}
+
+</div>
+<form action="/add_other" method="post">
+    <p>Other</p>
+    <p><input type="text" name="other"></p>
+</form>
+</p>
+
+<p>
+    <a class="btn btn-primary" href="{{ url_for('results') }}" role="button">Submit</a>
+</p>
+{% endblock %}
