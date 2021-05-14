@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <p>
-    Hello
+
+    {% for recipe in recipes %}
+    <a href="{{ recipe.get('href') }}">Link</a>
+    {% endfor %}
+    {{ search_string }}
 </p>
 {% endblock %}
