@@ -9,7 +9,9 @@
 
 <p>
     <!-- or action="/#" and handle post in index() -->
-<form method="post" action="/#" onkeydown="return event.keyCode != 13">
+<form method="post" action="/#" onkeydown="if (document.getElementById('add_other') != '') {
+    addRest();
+}">
     <select class="form-control form-control-lg" name='meal'>
         <option value="Breakfast/Brunch">Breakfast/Brunch</option>
         <option value="Lunch">Lunch</option>
@@ -45,7 +47,7 @@
         </label>
         <p>
             <label>
-                <input type="text" id="add_other" onkeydown="addRest()">
+                <input type="text" id="add_other">
             </label>
         </p>
         <script type="text/javascript">

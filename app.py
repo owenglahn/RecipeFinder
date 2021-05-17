@@ -17,16 +17,6 @@ def index():
         return redirect(url_for('add_diet', diet=diet))
     return render_template('index.html')
 
-@app.route('/<diet>', methods=["GET"])
-def add_diet(diet):
-    user_input.getlist('diet_restrictions').append(diet)
-    return render_template('index.html')
-
-@app.route('/add_other', methods=['POST'])
-def add_other():
-    others.append(request.form.get('other'))
-    return render_template('index.html', others=others)
-
 @app.route('/results')
 def results():
     search_string = ''
