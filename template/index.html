@@ -8,42 +8,78 @@
 </select>
 
 <p>
-<div class="btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" action='add_diet' method="get" checked autocomplete="off" name="diet_button" value="Gluten-Free">
-        Gluten-Free
-    </label>
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" action='add_diet' method="get" checked autocomplete="off" name="diet_button" value="Vegetarian">
-        Vegetarian
-    </label>
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" action='add_diet' method="get" checked autocomplete="off" name="diet_button" value="Vegan"> Vegan
-    </label>
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" action='add_diet' method="get" checked autocomplete="off" name="diet_button" value="Lactose-Free">
-        Lactose-Free
-    </label>
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" action='add_diet' method="get" checked autocomplete="off" name="diet_button" value="Halal"> Halal
-    </label>
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" action='add_diet' method="get" checked autocomplete="off" name="diet_button" value="Kosher"> Kosher
-    </label>
-    {% for other in others %}
-    <label class="btn btn-outline-secondary active">
-        <input type="checkbox" action='add_diet' method='get' checked autocomplete="on" name="diet_button" value="{{ other }}">{{ other }}
-    </label>
-    {% endfor %}
+    <!-- or action="/#" and handle post in index() -->
+<form method="post" action="/#" onkeydown="return event.keyCode != 13">
+    <select class="form-control form-control-lg" name='meal'>
+        <option value="Breakfast/Brunch">Breakfast/Brunch</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+    </select>
+    <div class="btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-outline-secondary">
+            <input type="checkbox" action='add_diet' method="get" autocomplete="off" name="diet_button"
+                value="Gluten-Free">
+            Gluten-Free
+        </label>
+        <label class="btn btn-outline-secondary">
+            <input type="checkbox" action='add_diet' method="get" autocomplete="off" name="diet_button"
+                value="Vegetarian">
+            Vegetarian
+        </label>
+        <label class="btn btn-outline-secondary">
+            <input type="checkbox" action='add_diet' method="get" autocomplete="off" name="diet_button"
+                value="Vegan">Vegan
+        </label>
+        <label class="btn btn-outline-secondary">
+            <input type="checkbox" action='add_diet' method="get" autocomplete="off" name="diet_button"
+                value="Lactose-Free">
+            Lactose-Free
+        </label>
+        <label class="btn btn-outline-secondary">
+            <input type="checkbox" action='add_diet' method="get" autocomplete="off" name="diet_button" value="Halal">
+            Halal
+        </label>
+        <label class="btn btn-outline-secondary">
+            <input type="checkbox" action='add_diet' method="get" autocomplete="off" name="diet_button" value="Kosher">
+            Kosher
+        </label>
+        <p>
+            <label>
+                <input type="text" id="add_other" onkeydown="addRest()">
+            </label>
+        </p>
+        <script type="text/javascript">
+            function addRest() {
+                if (event.keyCode == 13) {
+                    let userInput = document.getElementById("add_other").value;
+                    let newBox = document.createElement("input");
+                    newBox.type = "checkbox";
+                    newBox.action = 'add_diet';
+                    newBox.method = 'get';
+                    newBox.autocomplete = 'off';
+                    newBox.name = 'diet_button';
+                    newBox.value = userInput;
+                    let newLabel = document.createElement("label");
+                    newLabel.class = "btn btn-outline-secondary";
+                    let labelText =
+                        document.createTextNode(userInput);
+                    newLabel.appendChild(labelText);
+                    newLabel.appendChild(newBox);
+                }
+            }
+            // $(document).ready(function () {
+            //     $(window).keydown(function (event) {
+            //         if (event.keyCode == 13) {
+            //             event.preventDefault();
+            //             return false;
+            //         }
+            //     });
 
-</div>
-<form action="/add_other" method="post">
-    <p>Other</p>
-    <p><input type="text" name="other"></p>
+            // });
+        </script>
+    </div>
+    <p><input type="submit" value="Submit"></p>
 </form>
-</p>
 
-<p>
-    <a class="btn btn-primary" href="{{ url_for('results') }}" role="button">Submit</a>
 </p>
 {% endblock %}
