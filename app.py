@@ -3,7 +3,6 @@ from selenium.webdriver.common.keys import Keys
 from flask import Flask, redirect, render_template, request, url_for
 from bs4 import BeautifulSoup as soup
 
-import json
 app = Flask(__name__, template_folder='template', static_folder='static')
 
 user_input = {'meal': '', 'diet_restrictions': []}
