@@ -43,7 +43,7 @@ def results():
     google_search.send_keys(Keys.ENTER)
     assert "No results found." not in driver.page_source
     # web scrape results from search
-    recipes = soup(driver.page_source, 'html.parser').find_all('a')[30:50]
+    recipes = soup(driver.page_source, 'html.parser').find_all('a')[0:20]
     driver.quit()
     return render_template('results.html', recipes=recipes, search_string=search_string)
 
