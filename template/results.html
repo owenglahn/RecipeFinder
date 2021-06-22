@@ -1,10 +1,14 @@
-{% extends "base.html" %}
-{% block content %}
-<p>
+{% extends "base.html" %} {% block content %}
 
-    {% for recipe in recipes %}
-    <a href="{{ recipe.get('href') }}">Link</a>
-    {% endfor %}
-    {{ search_string }}
+<h1>Try These:</h1>
+<p>
+  {% for recipe in recipes %}
+  <!-- <a href="{{ recipe.get('href') }}">{{ recipe.get('')}}</a> -->
+  {% if recipe.get_text() != 'Cached' and recipe.get_text() != 'Similar' and not
+  recipe.get_text().isdigit() and recipe.get_text() != "View all" and
+  recipe.get_text() != 'More items...' %}
+  <a href="{{recipe.get('href') }}">{{ recipe.get_text() }}</a>
+  <br />
+  {% endif %} {% endfor %}
 </p>
 {% endblock %}

@@ -1,40 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Recipe Finder</h1>
-<select class="form-control form-control-lg" name='meal' method='get' action="set_meal">
-    <option value="Breakfast/Brunch">Breakfast/Brunch</option>
-    <option value="Lunch">Lunch</option>
-    <option value="Dinner">Dinner</option>
-</select>
 
-<p>
+<div class="content">
+<div id="header">
+    <h1>Recip-Eaze</h1>
+    <h2 style="font-size: medium;">Find Recipes Instantly!</h2>
+</div>
     <!-- or action="/#" and handle post in index() -->
-<form method="post" action="/#" onkeydown="if (document.getElementById('add_other') != '') {
-    addRest();
-}">
+<form method="post" action="/#" sandbox="allow-scripts">
+    <div id="meal-select">
     <select class="form-control form-control-lg" name='meal'>
         <option value="Breakfast/Brunch">Breakfast/Brunch</option>
         <option value="Lunch">Lunch</option>
         <option value="Dinner">Dinner</option>
     </select>
-    <div class="btn-group-toggle" data-toggle="buttons">
+    </div>
+    <br>
+    <div class="btn-group-toggle" data-toggle="buttons" id="diet_restrictions">
         <label class="btn btn-outline-secondary">
-            <input type="checkbox" autocomplete="off" name="diet_button"
-                value="Gluten-Free">
+            <input type="checkbox" autocomplete="off" name="diet_button" value="Gluten-Free">
             Gluten-Free
         </label>
         <label class="btn btn-outline-secondary">
-            <input type="checkbox" autocomplete="off" name="diet_button"
-                value="Vegetarian">
+            <input type="checkbox" autocomplete="off" name="diet_button" value="Vegetarian">
             Vegetarian
         </label>
         <label class="btn btn-outline-secondary">
-            <input type="checkbox" autocomplete="off" name="diet_button"
-                value="Vegan">Vegan
+            <input type="checkbox" autocomplete="off" name="diet_button" value="Vegan">Vegan
         </label>
         <label class="btn btn-outline-secondary">
-            <input type="checkbox" autocomplete="off" name="diet_button"
-                value="Lactose-Free">
+            <input type="checkbox" autocomplete="off" name="diet_button" value="Lactose-Free">
             Lactose-Free
         </label>
         <label class="btn btn-outline-secondary">
@@ -45,43 +40,35 @@
             <input type="checkbox" autocomplete="off" name="diet_button" value="Kosher">
             Kosher
         </label>
-        <p>
-            <label>
-                <input type="text" id="add_other" onkeydown="addRest()">
-            </label>
-        </p>
-        <script type="text/javascript">
-            function addRest() {
-                if (event.keyCode == 13) {
-                    let userInput = document.getElementById("add_other").value;
+    </div>
+    <p class="test">
+    <div>
+        <label>
+            <input type="text" id="add_other">
+        </label>
+        <script>
+            function addRestriction() {
+                let userInput = document.getElementById("add_other").value;
+                if (userInput != "") {
                     let newBox = document.createElement("input");
                     newBox.type = "checkbox";
-                    newBox.action = 'add_diet';
-                    newBox.method = 'get';
                     newBox.autocomplete = 'off';
                     newBox.name = 'diet_button';
                     newBox.value = userInput;
+                    newBox.checked = true;
                     let newLabel = document.createElement("label");
-                    newLabel.class = "btn btn-outline-secondary";
-                    let labelText =
-                        document.createTextNode(userInput);
-                    newLabel.appendChild(labelText);
+                    newLabel.className = "btn btn-outline-secondary active";
                     newLabel.appendChild(newBox);
+                    newLabel.appendChild(document.createTextNode(userInput));
+                    document.getElementById('diet_restrictions').appendChild(newLabel);
+                    document.getElementById('add_other').value = '';
                 }
             }
-            // $(document).ready(function () {
-            //     $(window).keydown(function (event) {
-            //         if (event.keyCode == 13) {
-            //             event.preventDefault();
-            //             return false;
-            //         }
-            //     });
-
-            // });
         </script>
+        <input type="button" value="Add" id="add" onclick="addRestriction()">
     </div>
+    </p>
     <p><input type="submit" value="Submit"></p>
 </form>
-
-</p>
+</div>
 {% endblock %}
