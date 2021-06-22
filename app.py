@@ -1,9 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from time import sleep
 from flask import Flask, redirect, render_template, request, url_for
 from bs4 import BeautifulSoup as soup
-import requests
 
 import json
 app = Flask(__name__, template_folder='template', static_folder='static')
