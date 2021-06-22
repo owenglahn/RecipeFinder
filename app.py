@@ -2,6 +2,15 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from flask import Flask, redirect, render_template, request, url_for
 from bs4 import BeautifulSoup as soup
+import os
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+driver = webdriver.Chrome(executable_path=os.environ.get(
+    "CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 app = Flask(__name__, template_folder='template', static_folder='static')
 
