@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from flask import Flask, redirect, render_template, request, url_for
 from bs4 import BeautifulSoup as soup
 import os
+import validators
 
 app = Flask(__name__, template_folder='template', static_folder='static')
 
@@ -42,8 +43,13 @@ def results():
     google_search.send_keys(search_string)
     google_search.send_keys(Keys.ENTER)
     assert "No results found." not in driver.page_source
-    # web scrape results from search
-    recipes = soup(driver.page_source, 'html.parser').find_all('a')[18:28]
+    # web scrape results from search, filter valid links
+    recipes = soup(driver.page_source, 'html.parser').find_all('a')
+    # recipes = filter(validators.url, recipes)
+    for link in recipes:
+        valid = validators.url(link)
+        if not valid:
+            recipes.remove(link)
     driver.quit()
     return render_template('results.html', recipes=recipes, search_string=search_string)
 
