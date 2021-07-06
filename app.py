@@ -47,7 +47,7 @@ def results():
     recipes = soup(driver.page_source, 'html.parser').find_all('a')
     # recipes = filter(validators.url, recipes)
     for link in recipes:
-        valid = validators.url(link)
+        valid = validators.url(link.get('href'))
         if not valid:
             recipes.remove(link)
     driver.quit()
