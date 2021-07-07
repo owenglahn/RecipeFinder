@@ -44,7 +44,7 @@ def results():
     google_search.send_keys(Keys.ENTER)
     assert "No results found." not in driver.page_source
     # web scrape results from search, filter valid links
-    recipes = soup(driver.page_source, 'html.parser').find_all('a')
+    recipes = soup(driver.page_source, 'html.parser').find_all('a')[10:30]
     # recipes = filter(validators.url, recipes)
     for link in recipes:
         valid = validators.url(link.get('href'))
