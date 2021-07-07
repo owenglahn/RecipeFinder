@@ -48,7 +48,7 @@ def results():
     # recipes = filter(validators.url, recipes)
     for link in recipes:
         valid = validators.url(link.get('href'))
-        if not valid:
+        if not valid or len(link.get_text()) < 15:
             recipes.remove(link)
     driver.quit()
     return render_template('results.html', recipes=recipes, search_string=search_string)
