@@ -6,6 +6,7 @@ import os
 import validators
 
 app = Flask(__name__, template_folder='template', static_folder='static')
+app.config["CHROMEDRIVER_PATH"] = "/opt/homebrew/bin/chromedriver"
 
 user_input = {'meal': '', 'diet_restrictions': []}
 others = []
@@ -27,14 +28,14 @@ def results():
         search_string += rest + ';'
 
     search_string += user_input.get('meal') + ';recipe'
-    # depends on safari being installed and safaridriver being enabled
+    # depends on chrome being installed and chromedriver being enabled
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(executable_path=os.environ.get(
-        "CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    driver = webdriver.Chrome(
+        executable_path=app.config["CHROMEDRIVER_PATH"], chrome_options=chrome_options)
     # use google search engine
     driver.get("https://www.google.com/")
     google_search = driver.find_element_by_name("q")
@@ -44,7 +45,7 @@ def results():
     google_search.send_keys(Keys.ENTER)
     assert "No results found." not in driver.page_source
     # web scrape results from search, filter valid links
-    recipes = soup(driver.page_source, 'html.parser').find_all('a')[10:30]
+    recipes = soup(driver.page_source, 'html.parser').find_all('a')[30:50]
     # recipes = filter(validators.url, recipes)
     for link in recipes:
         valid = validators.url(link.get('href'))
